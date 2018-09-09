@@ -3,11 +3,15 @@ package ru.spbstu.icc.kspt
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.PrintWriter
-import java.net.ServerSocket
+import java.net.Socket
 
-class Socket(socket: java.net.Socket) {
+class SocketWrapper(private val socket: Socket) {
     private val input = BufferedReader(InputStreamReader(socket.getInputStream()))
     private val output = PrintWriter(socket.getOutputStream())
+
+    fun close() = socket.close()
+
+    fun ready() = input.ready()
 
     fun readln() = input.readLine() ?: throw ClosedSocketException()
 
@@ -20,10 +24,7 @@ class Socket(socket: java.net.Socket) {
     class ClosedSocketException : Exception()
 
     companion object {
-        fun <R> create(address: String, port: Int, apply: ru.spbstu.icc.kspt.Socket.() -> R): R =
-                java.net.Socket(address, port).use { Socket(it).apply() }
+        fun <R> create(address: String, port: Int, apply: SocketWrapper.() -> R): R =
+                Socket(address, port).use { SocketWrapper(it).apply() }
     }
 }
-
-fun <R> ServerSocket.acceptWrapped(apply: ru.spbstu.icc.kspt.Socket.() -> R): R =
-        Socket(accept()).apply()

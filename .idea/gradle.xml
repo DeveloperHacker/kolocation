@@ -9,8 +9,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/desktop" />
-            <option value="$PROJECT_DIR$/interface" />
+            <option value="$PROJECT_DIR$/master" />
             <option value="$PROJECT_DIR$/server" />
+            <option value="$PROJECT_DIR$/shared" />
             <option value="$PROJECT_DIR$/stub" />
           </set>
         </option>

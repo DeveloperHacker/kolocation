@@ -5,7 +5,7 @@ object Client {
     @JvmStatic
     fun main(args: Array<String>) {
         val data = ArrayList<Status>()
-        Socket.create(Configuration.SERVER_IP, Configuration.SERVER_PORT) {
+        SocketWrapper.create(Configuration.SERVER_IP, Configuration.SERVER_PORT) {
             for (i in 0..100) {
                 writeln(Command.READ.toString())
                 data.add(Status.valueOf(readln()))
