@@ -1,0 +1,5 @@
+rootProject.name = 'kolocation'
+include 'interface'
+include 'server'
+include 'stub'
+include 'desktop'
