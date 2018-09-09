@@ -19,6 +19,8 @@ object Configuration {
             .map { it.component1() to it.component2() }
             .toMap()
 
+    val FREQUENCY = configuration("frequency") { toInt() }
+
     val SERVER_IP = configuration("server-ip")
 
     val SERVER_PORT = configuration("server-port") { toInt() }

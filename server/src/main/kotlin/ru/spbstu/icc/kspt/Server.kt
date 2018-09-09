@@ -1,35 +1,25 @@
 package ru.spbstu.icc.kspt
 
-import java.io.PrintWriter
 import java.net.ServerSocket
-import java.util.Date
 
-/**
- * A TCP server that runs on port 9090.  When a client connects, it
- * sends the client the current date and time, then closes the
- * connection with that client.  Arguably just about the simplest
- * server you can write.
- */
 object Server {
-
-    /**
-     * Runs the server.
-     */
     @JvmStatic
     fun main(args: Array<String>) {
-        val listener = ServerSocket(Configuration.SERVER_PORT)
-        try {
+        val dataHandler = DataHandler()
+        ServerSocket(Configuration.SERVER_PORT).use { listener ->
             while (true) {
-                val socket = listener.accept()
-                try {
-                    val out = PrintWriter(socket.getOutputStream(), true)
-                    out.println(Date().toString())
-                } finally {
-                    socket.close()
+                listener.acceptWrapped {
+                    var close = false
+                    while (!close) {
+                        val command = Command.valueOf(readln())
+                        when (command) {
+                            Command.WRITE -> dataHandler.writeRaw(readln())
+                            Command.READ -> writeln(dataHandler.readStatus())
+                            Command.CLOSE -> close = true
+                        }
+                    }
                 }
             }
-        } finally {
-            listener.close()
         }
     }
 }
