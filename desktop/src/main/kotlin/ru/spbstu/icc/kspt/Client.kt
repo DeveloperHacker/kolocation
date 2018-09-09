@@ -16,6 +16,6 @@ object Client {
             writeln(Command.CLOSE.toString())
             logger.info("Disconnect from the server $canonicalHostName")
         }
-        data.forEach { println(data) }
+        data.forEach { println(it) }
     }
 }
