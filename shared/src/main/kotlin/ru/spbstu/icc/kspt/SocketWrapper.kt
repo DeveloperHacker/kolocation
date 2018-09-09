@@ -8,6 +8,7 @@ import java.net.Socket
 class SocketWrapper(private val socket: Socket) {
     private val input = BufferedReader(InputStreamReader(socket.getInputStream()))
     private val output = PrintWriter(socket.getOutputStream())
+    val canonicalHostName by lazy { socket.inetAddress.canonicalHostName!! }
 
     fun close() = socket.close()
 
