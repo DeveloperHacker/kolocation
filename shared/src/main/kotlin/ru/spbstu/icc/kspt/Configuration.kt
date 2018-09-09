@@ -19,13 +19,12 @@ object Configuration {
             .map { it.component1() to it.component2() }
             .toMap()
 
-    val FREQUENCY = configuration("frequency").toInt()
-
     val SERVER_IP = configuration("server-ip")
-
     val SERVER_PORT = configuration("server-port").toInt()
-
     val SERVER_THREADS = configuration("server-threads").toInt()
+
+    val GENERATION_FREQUENCY = configuration("generation-frequency").toInt()
+    val GENERATION_STEPS = configuration("generation-steps").toInt()
 
     private fun configuration(name: String) = CONFIGURATION[name] ?: throw ConfigurationNotFoundException(name)
 

@@ -1,4 +1,4 @@
-package ru.spbstu.icc.kspt
+package ru.spbstu.icc.kspt.data
 
 data class Raw(val signal1: Double, val signal2: Double) {
     fun dump() = "Raw($signal1,$signal2)"

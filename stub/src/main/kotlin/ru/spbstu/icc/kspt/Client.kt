@@ -1,5 +1,7 @@
 package ru.spbstu.icc.kspt
 
+import ru.spbstu.icc.kspt.data.Raw
+
 
 object Client {
     class Sinus(private var x: Double, private val dx: Double) {
@@ -11,8 +13,8 @@ object Client {
     @JvmStatic
     fun main(args: Array<String>) {
         val logger = Logger()
-        val fq = Configuration.FREQUENCY // Гц
-        val points = fq * 10
+        val frequency = Configuration.GENERATION_FREQUENCY // Гц
+        val points = frequency * Configuration.GENERATION_STEPS
         val dx = 2 * Math.PI / points
         val sin = Sinus(0.0, dx)
         val cos = Sinus(Math.PI / 2.0, dx)
@@ -21,8 +23,8 @@ object Client {
             for (i in 0..points) {
                 writeln(Command.WRITE.toString())
                 writeln(Raw(sin.next(), cos.next()).dump())
-                if (i % fq == 0) logger.info("Uploading complete on ${i * 100 / points}%")
-                Thread.sleep(1000L / fq)
+                if (i % frequency == 0) logger.info("Uploading complete on ${i * 100 / points}%")
+                Thread.sleep(1000L / frequency)
             }
             writeln(Command.CLOSE.toString())
             logger.info("Disconnect from the server $canonicalHostName")

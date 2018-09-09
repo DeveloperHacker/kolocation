@@ -27,7 +27,7 @@ class Server {
                     dataHandler.writeRaw(socket.readln())
                 }
                 Command.READ -> {
-                    socket.writeln(dataHandler.readStatus())
+                    dataHandler.readStatus().forEach(socket::writeln)
                 }
                 Command.CLOSE -> {
                     close = true
